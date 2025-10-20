@@ -4,7 +4,8 @@
 
 @theme {
     /* Your Original Colors - Professional Implementation */
-    --color-primary: #00ced1; /* Cyan */
+    /*--color-primary: #00ced1; /* Cyan */
+    --color-primary: #4940f0;
     --color-secondary: #ff69b4; /* Pink */
     --color-accent: #9b59b6; /* Purple */
 

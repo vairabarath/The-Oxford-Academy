@@ -14,11 +14,11 @@ const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
 
   const quickLinks = [
-    { name: "Home", to: "home" },
-    { name: "About", to: "about" },
-    { name: "Services", to: "services" },
-    { name: "Courses", to: "courses" },
-    { name: "Contact", to: "contact" },
+    { name: "Home", path: "/" },
+    { name: "About", path: "/about" },
+    { name: "Services", path: "/services" },
+    { name: "Courses", path: "/courses" },
+    { name: "Contact", path: "/contact" },
   ];
 
   const popularCourses = [
@@ -87,12 +87,8 @@ const Footer: React.FC = () => {
               {quickLinks.map((link) => (
                 <li key={link.name}>
                   <Link
-                    to={link.to}
-                    spy={true}
-                    smooth={true}
-                    offset={-80}
-                    duration={500}
-                    className="text-gray-400 hover:text-primary cursor-pointer transition-colors flex items-center"
+                    to={link.path}
+                    className="text-gray-400 hover:text-primary transition-colors flex items-center"
                   >
                     <span className="mr-2">→</span>
                     {link.name}
@@ -185,7 +181,7 @@ const Footer: React.FC = () => {
             </div>
           </div>
           <p className="text-center text-gray-500 text-xs mt-4">
-            Designed & Developed with ❤️
+            Designed & Developed by Barath
           </p>
         </div>
       </div>

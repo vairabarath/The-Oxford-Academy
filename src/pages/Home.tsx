@@ -1,8 +1,6 @@
 import Hero from "../components/Hero";
 import About from "../components/About";
 import Services from "../components/Services";
-import Courses from "../components/Courses";
-import Contact from "../components/Contact";
 import Testimonials from "../components/Testimonials";
 
 const Home: React.FC = () => {
@@ -11,9 +9,7 @@ const Home: React.FC = () => {
       <Hero />
       <About />
       <Services />
-      <Courses />
       <Testimonials />
-      <Contact />
     </>
   );
 };

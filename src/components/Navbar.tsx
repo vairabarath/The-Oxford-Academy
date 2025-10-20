@@ -1,16 +1,12 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { FaBars, FaTimes, FaPhone } from "react-icons/fa";
-import { Link } from "react-scroll";
-
-interface NavLink {
-  name: string;
-  to: string;
-}
+import { Link, NavLink, useLocation } from "react-router-dom";
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [scrolled, setScrolled] = useState<boolean>(false);
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = (): void => {
@@ -20,12 +16,17 @@ const Navbar: React.FC = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const navLinks: NavLink[] = [
-    { name: "Home", to: "home" },
-    { name: "About", to: "about" },
-    { name: "Services", to: "services" },
-    { name: "Courses", to: "courses" },
-    { name: "Contact", to: "contact" },
+  // Close mobile menu when route changes
+  useEffect(() => {
+    setIsOpen(false);
+  }, [location]);
+
+  const navLinks = [
+    { name: "Home", path: "/" },
+    { name: "About", path: "/about" },
+    { name: "Services", path: "/services" },
+    { name: "Courses", path: "/courses" },
+    { name: "Contact", path: "/contact" },
   ];
 
   return (
@@ -39,41 +40,43 @@ const Navbar: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
-          <motion.div
-            whileHover={{ scale: 1.02 }}
-            className="flex items-center space-x-3 cursor-pointer"
-          >
-            <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-xl">OA</span>
-            </div>
-            <div>
-              <h1 className="text-xl font-bold text-dark">
-                The Oxford Academy
-              </h1>
-              <p className="text-xs text-gray">The Future</p>
-            </div>
-          </motion.div>
+          <Link to="/">
+            <motion.div
+              whileHover={{ scale: 1.02 }}
+              className="flex items-center space-x-3 cursor-pointer"
+            >
+              <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center">
+                <span className="text-white font-bold text-xl">OA</span>
+              </div>
+              <div>
+                <h1 className="text-xl font-bold text-dark">
+                  The Oxford Academy
+                </h1>
+                <p className="text-xs text-gray">The Future</p>
+              </div>
+            </motion.div>
+          </Link>
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center space-x-8">
             {navLinks.map((link) => (
-              <Link
+              <NavLink
                 key={link.name}
-                to={link.to}
-                spy={true}
-                smooth={true}
-                offset={-80}
-                duration={500}
-                className="text-gray hover:text-primary cursor-pointer transition-colors font-medium"
+                to={link.path}
+                className={({ isActive }) =>
+                  `text-gray hover:text-primary cursor-pointer transition-colors font-medium ${
+                    isActive ? "text-primary font-semibold" : ""
+                  }`
+                }
               >
                 {link.name}
-              </Link>
+              </NavLink>
             ))}
             <motion.a
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               href="tel:7010507288"
-              className="flex items-center space-x-2 bg-primary text-white px-6 py-2.5 rounded-lg font-semibold hover:bg-primary/90 transition-colors shadow-sm"
+              className="flex items-center space-x-2 bg-primary text-white px-6 py-2.5 rounded-lg font-semibold hover:bg-primary/90 transition-colors"
             >
               <FaPhone size={16} />
               <span>Call Now</span>
@@ -100,18 +103,19 @@ const Navbar: React.FC = () => {
             className="md:hidden bg-white shadow-lg rounded-lg p-4 mb-4"
           >
             {navLinks.map((link) => (
-              <Link
+              <NavLink
                 key={link.name}
-                to={link.to}
-                spy={true}
-                smooth={true}
-                offset={-80}
-                duration={500}
-                onClick={() => setIsOpen(false)}
-                className="block py-3 text-gray hover:text-primary cursor-pointer transition-colors"
+                to={link.path}
+                className={({ isActive }) =>
+                  `block py-3 cursor-pointer transition-colors ${
+                    isActive
+                      ? "text-primary font-semibold"
+                      : "text-gray hover:text-primary"
+                  }`
+                }
               >
                 {link.name}
-              </Link>
+              </NavLink>
             ))}
             <a
               href="tel:7010507288"
